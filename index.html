@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Supermarket Kigali - Buying & Selling System</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+  <h1>🏪 Supermarket Kigali - Online System</h1>
+  <p>ITLSE801 - Q15 Logical Model Implementation | PK & FK Demo</p>
+
+  <div class="tabs">
+    <button class="tab active" onclick="openTab('dashboard')">Dashboard</button>
+    <button class="tab" onclick="openTab('product')">Products</button>
+    <button class="tab" onclick="openTab('purchase')">PURCHASE (Stock IN)</button>
+    <button class="tab" onclick="openTab('sales')">SALES (Stock OUT)</button>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div id="dashboard" class="tab-content active">
+    <h2>Logical Data Model - Primary & Foreign Keys</h2>
+    <div class="model">
+      <b>Customer</b>(customer_id <span>PK</span>, name) <br>
+      <b>Supplier</b>(supplier_id <span>PK</span>, name) <br>
+      <b>Product</b>(product_id <span>PK</span>, category_id <span>FK</span>, supplier_id <span>FK</span>, stock) <br>
+      <b>Orders</b>(order_id <span>PK</span>, customer_id <span>FK</span>) <br>
+      <b>OrderItem</b>(order_id <span>FK</span>, product_id <span>FK</span>) <br>
+      <b>Purchase</b>(purchase_id <span>PK</span>, supplier_id <span>FK</span>, product_id <span>FK</span>)
+    </div>
+    <div id="stats" class="stats"></div>
+  </div>
+
+  <!-- PRODUCTS -->
+  <div id="product" class="tab-content">
+    <h2>Product Table</h2>
+    <table id="productTable"><thead><tr><th>product_id PK</th><th>Name</th><th>Price</th><th>Stock</th><th>category_id FK</th><th>supplier_id FK</th></tr></thead><tbody></tbody></table>
+    <h3>Add Product</h3>
+    <input id="pName" placeholder="Product Name">
+    <input id="pPrice" type="number" placeholder="Price">
+    <input id="pStock" type="number" placeholder="Initial Stock">
+    <button onclick="addProduct()">Add Product</button>
+  </div>
+
+  <!-- PURCHASE = STOCK IN -->
+  <div id="purchase" class="tab-content">
+    <h2>🟢 PURCHASE - Buying from Supplier (Money OUT, Stock IN)</h2>
+    <p>Supplier -> Supermarket. Stock increases.</p>
+    <select id="purchaseProduct"></select>
+    <input id="purchaseQty" type="number" placeholder="Quantity to Purchase">
+    <input id="purchaseSupplier" placeholder="Supplier Name (e.g. Mukamira Supplier)">
+    <button onclick="makePurchase()">Confirm Purchase</button>
+    <table id="purchaseLog"><thead><tr><th>purchase_id PK</th><th>supplier_id FK</th><th>product_id FK</th><th>Qty</th><th>Date</th></tr></thead><tbody></tbody></table>
+  </div>
+
+  <!-- SALES = STOCK OUT -->
+  <div id="sales" class="tab-content">
+    <h2>🔴 SALES - Selling to Customer (Money IN, Stock OUT)</h2>
+    <p>Supermarket -> Customer. Stock decreases. Profit made.</p>
+    <select id="salesProduct"></select>
+    <input id="salesQty" type="number" placeholder="Quantity to Sell">
+    <input id="salesCustomer" placeholder="Customer Name">
+    <button onclick="makeSale()">Confirm Sale</button>
+    <table id="salesLog"><thead><tr><th>order_id PK</th><th>customer_id FK</th><th>product_id FK</th><th>Qty</th><th>Total</th></tr></thead><tbody></tbody></table>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
